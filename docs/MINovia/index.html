@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MI NIÑA</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+    <div id="topMessage"></div>
+    <div class="container" id="panel">
+        <h1>¿Quieres ser mi Novia?</h1>
+        <p>
+            Solo quería decirte que hay muchos momentos hermosos en la vidad, y ese momento eres tú.
+            Pero llegaste tú, con esa forma de mirarmé, de hablar, de reírte de mis tonterías, y sin darme cuenta, 
+            comencé a esperar tus mensajes y el día de volver a verte.  
+            Me gustas, y cada día que te veo, me gustas mucho más. ❤️
+        </p>
+        <img src="file:///C:/Users/Lenovo/.vscode/VSC-PROYECTOS/MINovia/imagen/Puca%20Beso.jpg" class="beso" alt="un beso">
+        <div class="buttons">
+            <button id="yesBtn">Sí</button>
+            <button id="noBtn">No</button>
+        </div>
+    </div>
+
+<!-- Mensaje fijo debajo del panel -->
+    <div id="noMessage">Tu vas hacer mía 😼</div>
+
+    <div class="modal-overlay" id="modal">
+        <div class="modal-content">
+            <a href="#" id="backArrow">&larr;</a> 
+            <div id="respuesta"> Sabía que aceptarías😍🫶</div>
+            <img src="" class="rosa-final" alt="Rosa final">
+        </div>
+    </div>
+    
+    <div class="modal-overlay android-modal" id="androidModal">
+        <div class="modal-content">
+            <div class="android-title">Tú te lo buscaste</div>
+            <div id="androidText">Eliminando fotos...</div>
+        </div>
+    </div>
+    
+    <audio id="music" loop>
+        <source src="https://github.com/Baque2005/public-files/raw/refs/heads/main/2025/Si%20supieras%20lo%20que%20siento%20con%20mirarte%20-%20Gonzalo%20%C3%81vila%20(Lyrics)%20-%20Oldtimes.mp3" type="audio/mpeg">
+    </audio>
+    
+    <script>
+    const noBtn = document.getElementById("noBtn");
+    const yesBtn = document.getElementById("yesBtn");
+    const modal = document.getElementById("modal");
+    const androidModal = document.getElementById("androidModal");
+    const androidText = document.getElementById("androidText");
+    const music = document.getElementById("music");
+    const backArrow = document.getElementById("backArrow");
+    const topMessage = document.getElementById("topMessage");
+    const noMessage = document.getElementById("noMessage");
+
+    const mensajesNo = [
+    "Dale, sí por favor 😢",
+    "Te haré la persona más feliz ❤️",
+    "No digas que no 😭",
+    "Por favor, piénsalo bien 💌",
+    "Te necesito en mi vida 🫶"
+    ];
+
+    let noClickCount = 0;
+
+    noBtn.addEventListener("click", () => {
+    const rect = noBtn.getBoundingClientRect();
+      const mensaje = mensajesNo[Math.floor(Math.random() * mensajesNo.length)];
+
+    const bubble = document.createElement("div");
+    bubble.className = "bubble";
+    bubble.textContent = mensaje;
+    bubble.style.left = `${rect.left + rect.width / 2}px`;
+    bubble.style.top = `${rect.top - 10}px`;
+
+    document.body.appendChild(bubble);
+    setTimeout(() => bubble.remove(), 2500);
+
+    noClickCount++;
+    if(noClickCount === 5) mostrarAndroidModal();
+    });
+
+    function mostrarAndroidModal(){
+    androidModal.style.display = "flex";
+    const mensajesAndroid = [
+        "Eliminando las fotos...",
+        "Eliminando videos...",
+        "Eliminando tus mensajes...",
+        "Eliminando tu contacto...",
+        "Eliminando apps...",
+        "Eliminando archivos..."
+    ];
+    let index = 0;
+    const interval = setInterval(()=>{
+        androidText.textContent = mensajesAndroid[index % mensajesAndroid.length];
+        index++;
+    }, 1000);
+
+    setTimeout(()=>{
+        clearInterval(interval);
+        androidModal.style.display = "none";
+
+        // Ocultar botón "No"
+        noBtn.style.display = "none";
+
+        // Mostrar el mensaje "¿Y el no?" en negro
+        noMessage.style.display = "block";
+
+        // Mensaje superior de broma
+        topMessage.textContent = "Como que NO 🥺";
+        topMessage.style.display = "block";
+    }, 8000);
+    }
+
+    function playMusicOnce(){
+    music.play().catch(()=>{});
+    document.removeEventListener("click", playMusicOnce);
+    document.removeEventListener("touchstart", playMusicOnce);
+    }
+    document.addEventListener("click", playMusicOnce);
+    document.addEventListener("touchstart", playMusicOnce);
+
+    yesBtn.addEventListener("click", ()=>{
+    modal.style.display = "flex";
+    document.querySelector('.rosa-final').src = "file:///C:/Users/Lenovo/.vscode/VSC-PROYECTOS/MINovia/imagen/Puca%20Amor.jpg";
+    document.getElementById('respuesta').textContent = "Sabía que aceptarías 😍🫶";
+    });
+
+    backArrow.addEventListener("click", (e)=>{
+    e.preventDefault();
+    modal.style.display = "none";
+    });
+</script>
+
+</body>
+</html>
